@@ -8,12 +8,12 @@ LOG_FILE="$PROJECT_DIR/wardrive_$(date +%Y%m%d_%H%M%S).log"
 
 # Function to log messages
 log_message() {
-    echo "$(date +%Y-%m-%d %H:%M:%S) - $1" | tee -a "$LOG_FILE"
+    echo "$(date +%Y-%m-%d\ %H:%M:%S) - $1" | tee -a "$LOG_FILE"
 }
 
 # Print script version
 mkdir -p "$PROJECT_DIR"
-log_message "Starting BlowjobKing's Wardrive Script - Version $VERSION"
+log_message "Starting Christian's Wardrive Script - Version $VERSION"
 
 # Function to check for Python and install if necessary
 check_python() {
@@ -72,7 +72,7 @@ def start_scan():
             '--output-format', 'csv',
             'wlan0'  # Adjust with the selected interface
         ]
-        scan_process = subprocess.Popen(command, preexec_fn=os.setsid)
+        scan_process = subprocess.Popen(command)
         return jsonify({"status": "Scanning started"}), 200
     else:
         return jsonify({"error": "Scan already in progress"}), 400
@@ -81,7 +81,7 @@ def start_scan():
 def stop_scan():
     global scan_process
     if scan_process is not None:
-        os.killpg(os.getpgid(scan_process.pid), signal.SIGTERM)
+        os.kill(scan_process.pid, signal.SIGTERM)
         scan_process = None
         return jsonify({"status": "Scanning stopped"}), 200
     else:
@@ -165,35 +165,67 @@ prepare_frontend() {
 <body class="bg-gray-900 text-white min-h-screen flex flex-col justify-center items-center">
 
     <pre class="text-green-400 mb-8">
-
-▄██   ▄      ▄████████    ▄████████         ▄████████             
-███   ██▄   ███    ███   ███    ███        ███    ███             
-███▄▄▄███   ███    █▀    ███    ███        ███    ███             
-▀▀▀▀▀▀███  ▄███▄▄▄      ▄███▄▄▄▄██▀        ███    ███             
-▄██   ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀        ▀███████████             
-███   ███   ███    █▄  ▀███████████        ███    ███             
-███   ███   ███    ███   ███    ███        ███    ███             
-    ▀█████▀    ██████████   ███    ███        ███    █▀              
-                                                    ███    ███                               
-    ▄█     █▄   ▄█   ▄███████▄     ▄████████    ▄████████ ████████▄  
-███     ███ ███  ██▀     ▄██   ███    ███   ███    ███ ███   ▀███ 
-███     ███ ███▌       ▄███▀   ███    ███   ███    ███ ███    ███ 
-███     ███ ███▌  ▀█▀▄███▀▄▄   ███    ███  ▄███▄▄▄▄██▀ ███    ███ 
-███     ███ ███▌   ▄███▀   ▀ ▀███████████ ▀▀███▀▀▀▀▀   ███    ███ 
-███     ███ ███  ▄███▀         ███    ███ ▀███████████ ███    ███ 
-███ ▄█▄ ███ ███  ███▄     ▄█   ███    ███   ███    ███ ███   ▄███ 
-    ▀███▀███▀  █▀    ▀████████▀   ███    █▀    ███    ███ ████████▀  
-                                                                                        ███    ███            
-        ▄█    █▄       ▄████████    ▄████████    ▄████████ ▄██   ▄     
-    ███    ███     ███    ███   ███    ███   ███    ███ ███   ██▄   
-    ███    ███     ███    ███   ███    ███   ███    ███ ███▄▄▄███   
-    ▄███▄▄▄▄███▄▄   ███    ███  ▄███▄▄▄▄██▀  ▄███▄▄▄▄██▀ ▀▀▀▀▀▀███   
-▀▀███▀▀▀▀███▀  ▀███████████ ▀▀███▀▀▀▀▀   ▀▀███▀▀▀▀▀   ▄██   ███   
-    ███    ███     ███    ███ ▀███████████ ▀███████████ ███   ███   
-    ███    ███     ███    ███   ███    ███   ███    ███ ███   ███   
-    ███    █▀      ███    █▀    ███    ███   ███    ███  ▀█████▀    
-                                                            ███    ███   ███    ███             
-                                            
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS@@@@@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS@@@@@@?;;;;???????@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS@@@@@@@@@@@@;::.:;;;:;;????@@@@@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSS@@@@@@@@@@@@@@@@@@@@?;;;?@@@@@@@??@@@@@@@@@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSS@@?@@?@@@@@@@@@@@@@@@@@@@@@??@@@@@@@@@@@@@@@@@??@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSS@???@@@@?@@@@@@@@@@@@@@@@@@???@@@@@@@@@@@@@@@@@@???SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSS@?????????????@@@@@@@@@@@@@@@@@??@@@@@@@@@@@@@@@@@????;@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSS?;::;???????;?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@?????@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS@::..;?;:;;?;;?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@??@@???@@@@@?;;@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSS?.,,,:?:::;?;;?@@@@@?@@@@@@@@@@@@@@@@@@@@@@@@@@@????@@???@@@@?:.@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSS?++.,:::::;??;;?@@@??@@@@@@@@@@@@@@@@@@@@@@@@@@@@?????@@@??@@@@?.,;SSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSS@,+,,,:..:;????@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@?;??@@@?;?@@?:..;@SSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSS:,,++..,,:;??@@@@@@@???@@@?@@@@@@@@@@@@@@@@@@@@@@@@@?:;;;?;??.:@@;;::@SSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSS@:.,,+..,,.;?@@@@@@????@???@@@@@@@@@@@@@@@@@@@@@@@@@??:,;;;?:;?,:??@;.:SSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSS@:..,.:.,,;@@@@@@@?@@@@@@???@@@@@@@@@@@@@@@@@@@?????@?;..??:;:::.;:;?;.;@SSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSS;.;.:;,+,;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@?;?????;::??;:;:.:?;??;:;@SSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSS?:;;:;.+,;@@@@@?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@??@@???@????::;;:.:..:?;;?;;@SSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSS?;:?;?:.:?@@@@??@@@@@@@@@@@@@@@@@@@@@@@@@@@@@????????@@@@??;::??;..:;:?:;?:?SSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSS;;;??;;;??@@;??@@@@@@???@@@@@@@@@@@?@@@@????????@?;?@@@@@@;;;??;;:.:???;??;SSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSS@?;???;????;?@@@@@@@@???@@@@@???@@@@@???????;;;??@@??@@@??@??;;?;::.:;??;??@SSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSS??@?;;@?:;@@@@@@@@@???@@@@??;;@@@@@@@?;;??????@@@@@@@?@@:?@?;;??;;:;:;???@@SSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSS?@?;;??;:;;;??@@@@@?@?@?????;;@@@??????;?@@@@@@@@@@@@@@@;:?@?;;@@:::;;???@@SSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSS@@@;;?:::::???@@@@@@???;;:;@@??????;;???@@@@@@@@@@@@@@@???;@??;?@?::;;;;??SSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSS@@@:.;;:.;@@@@@@@@@@@?;;...;@@?;????????@@@@@@@@@@@@@@@@?@??@???@@@?;?????SSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSS@@;:;??;?@@@@@@@@@@@@?;:..,.@@@??@???@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@?????@SSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSS@@????@@@@@@??@@@@@@@;;:,,.,;@@@?@@@?@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@??@SSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSS@@@??@@@@@?;?@@@@@@@@;;:.,.,:??@??@@;;@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@??@SSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSS@@@?@@@@@@@@@@@@@@@?;;:,,.,,;;??;?@@:;??@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@?@SSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSS@@@@@@@@@@@@@@@@@@@?;;.,+.+,..:;;;?@:.;??@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@?@SSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSS@@@@@@@@@@@@@@@@@@@?;:.,,,++++,:;:;@;+.:;??@@@@@@@@@@@@@@@@?;?@@@@@@@@@@SSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSS@@@@@@@@@@@@@@@@@@?;:.,,,+**+,:;.;@?,+.,;?;@??@@@@@@@@@@@?;:;?@@@@@@@@@SSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSS@@@@@@@@@@@@@@@@@@@@?:.,,++*++,,.:?;,+,,:;:;??@@@@@@@@??;::::;@@@@@@@@SSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSS@@@@@@@@@@@@@@@@@@@@@??;;;:.,++,,.,+*+.::????????;::::......:;@@@@@@SSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSS@@@@@@@@@?;;?;;;;;;??;;????:.,,+++++,.:;;??@?;@??;;;:..,,+,.?@@@@@SSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSS@@@@@@?;:::;;;???@@@?@????;.,,+++,,.:;??;?????:??;.,,,++,.;?@??SSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSS@@?@@?;:...;;??;;????::;;;:.,,,+,..:;:.+.:::..::...+++,+:?@??SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSS???;;:,..::;;:.,.,++,...;.::**.:.:,,.,,+++,..:.+,,,:++:;;@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSS;;?::;;;..:::..,,,,,++,;.,+*%*+.;+++,,,....,,,,,,+,++::@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSS@.:.,,..:.,,...,,,++++,:,,+*%*++.,**++++++++*+,:++++,;;SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSS@;:,,,,::,++++++++*+,:,+++*%*+++..+********+,,,,,,+.@?SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSS@.+...,..,,++++,.:.++,++*%**+++,::.,,+,,..,,,,,,+;SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSS?+,...........,,++,,,++*%%*+++++++,,,,,,,,,++,,,@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSS.,.,,,,,,++***+++,,,+**%%*++++,+******+++,,,,+.SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSS@,,.,,,,+++++++++,+++**%%**++++***++++++,,,,,+?SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSS;,...,,,,+++++**,,,,+***+,..:.**++++++,,,,,,.SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSS:,...,,,,+++++*,;??;..,.:;;:,++++++,,,,..,.@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS......,,,,,,++++,.:;;;;:,+*+++,,,,,,,...,.?SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS:.::........,,++++,,.,++,,.::.,+++,...,,:,,SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS?,:::..,,,..::::::.....::::.,++++,.:...,:+#:SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS.+:::;:.,,,,,.....,,,,,....,,,,,,...::::,%#*@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS++.:::::........::::::...,+++,,,..:;;;:,*%# .SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSS,%+,.;;;::..,,,+++++++******++,,,.;??;.+*%## #?SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSS:#%*,.:;??;;:.,++***********++,,.;??;.,+*%#####+@SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSS@@@@@@,#%%*,::;;???;:,,++++++++++++,.;??:.,+*%####    .@@SS@@@@@@@SSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSS@@@@@?,*%%%*+,..::;;??;:..,,,....:;??;:.,*%#########  +;@@@@@@@@@@@@@SSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSS@@@@@@@.+%**%%%*+,..:::;?????????@@?;;:.+%#         ##*+?@@@@@@@@@@@@@@@SSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSS@@@@@@@@@?,*%**%%##%%+.:;;;;;;;;::::;;:.+%#          ##%,;S@@@@@@@@@@@@@@@@SSSSSSSSSSSSSSS
+SSSSSSSSSSSSS@@@@@@@@@@@@@@@@@:+%%%%%%####%*,.;@??@@@@@@@@.#           ###%,@@@@@@@@@@@@@@@@@@@@@SSSSSSSSSSSSS
+SSSSSSSSSSS@@@@@@@@@@@@@@@@@@@@,*####%%######,?@@@?;::;:::;:%         #%##+?@@@@@@@@@@@@@@@@@@@@@@@SSSSSSSSSSS
+SSSSSSSSSS@@@@@@@@@@@@@@@@@@@@S;+%######### +;@@@???;.,...:?:%     ##%%##*?@@@@@@@@@@@@@@@@@@@@@@@@@@SSSSSSSSS
+                                             
     </pre>
 
     <div class="mb-8">
